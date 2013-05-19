@@ -1,0 +1,47 @@
+version 1.0
+13 December 2005
+
+Revamp of publishing system to use XML microcontent description files
+(in wpsb-files/microcontent/description) and publish more types of
+reviews and events, and also lists, media and people and group
+showcases.
+
+--------------------------------------
+version 0.52
+03 April 2005
+
+One fix for changes to a9 search results, to fix broken lookup script.
+
+--------------------------------------
+version 0.51
+11 March 2005
+
+Minor bugfix and feature release; added lookup and options for amazon.co.uk
+and amazon.ca; bugfix on escaped characters in product titles from lookup.
+
+--------------------------------------
+version 0.5
+08 March 2005
+
+Added GPL declaration to all source files; fixed bug in handling of drafts.
+
+--------------------------------------
+version 0.4
+03 March 2005
+
+Added options page for plugin; options controlling stylesheet (include/exclude)
+and amazon.com affiliates.  The logic should be largely present for other 
+affiliate programs as well, at least in the edit form and preferences.  The
+structure could be simplified a bit.
+
+Now that there's an options page, it might make sense to start controlling which
+pages and options are actually shown on the edit/post screens.
+
+--------------------------------------
+version 0.3
+01 March 2005
+
+Added support for yahoo movies lookups.  Updated xml inclusion to use the latest
+syntax for the subnode/script blocks.
+
+

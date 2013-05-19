@@ -1,0 +1,44 @@
+title	media:title
+link
+copyright	media:copyright
+media:restriction
+media:restriction/@relationship
+media:restriction/@type
+pubdate
+itunes:author
+itunes:block
+itunes:category
+itunes:duration	media:content/@duration
+itunes:explicit
+itunes:keywords	media:keywords
+itunes:owner
+itunes:subtitle
+itunes:summary	media:description
+enclosure	media:content/@url
+guid
+media:group
+media:content/@fileSize
+media:content/@type
+media:content/@medium
+media:content/@isDefault (?)
+media:content/@expression
+media:content/@bitreate
+media:content/@framerate
+media:content/@samplingrate
+media:content/@channels
+media:content/@height
+media:content/@width
+media:content/@lang
+media:adult
+media:rating
+media:thumbnail
+media:category
+media:hash
+media:player
+media:credit		somebody's name - somebody you want to credit
+media:credit/@role		role of person credited
+media:credit/@scheme		scheme for identifying roles (e.g. url:ebu for european broadcasting union)
+media:text		text transcript etc
+media:text/@type
+media:text/@start
+media:text/@end

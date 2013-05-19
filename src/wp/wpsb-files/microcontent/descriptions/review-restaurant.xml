@@ -1,0 +1,78 @@
+<micro-content type="review/restaurant" label="Restaurant" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject">
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><field type="image" content="@image"/></if>
+			<if content="@ethnicity"><p><b>Food style/ethnicity:</b> <field content="@ethnicity"/></p></if>
+			<if content="@map"><p><b><a><attribute name="href"><field content="@map"/></attribute>Map</a></b></p></if>
+			<if content="@chain"><p><b>Chain</b>: <field content="@chain"/></p></if>
+			<if content="hours/@opening"><group content="hours">
+			<p><b>Hours</b>: <if content="@opening"><field content="@opening"/></if> - <if content="@closing"><field content="@closing"/></if></p>
+			</group></if>
+			<group content="price">
+			<p><b>Price</b>: <field content="@min"/> - <field content="@max"/>
+				<if content="@currency">(<field content="@currency"/>)</if></p>
+			</group>
+			<p><group content="location">
+				<b>Location</b>:
+				<if content="@address"><p><field content="@address"/></p></if>
+				<if content="@subaddress"><p><field content="@subaddress"/></p></if>
+				<p><if content="@city"><field content="@city"/><if content="@state">, </if></if>
+				<if content="@state"><field content="@state"/></if>
+				<if content="@postcode"><field content="@postcode"/></if></p>
+				<if content="@country"><p><field content="@country"/></p></if>
+			</group></p>
+		</group>
+		<if content="foodrating"><p>Food rating: <field content="foodrating" type="rating"/></p></if>
+		<if content="decorrating"><p>Decor rating: <field content="decorrating" type="rating"/></p></if>
+		<if content="servicerating"><p>Service rating: <field content="servicerating" type="rating"/></p></if>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%">
+		<tr><td width="50%" valign="top">
+			<field label="Restaurant name" content="@name" length="50"/>
+			<field label="Food style/ethnicity" content="@ethnicity" length="50"/>
+			<group label="Price range" content="price" orientation="horizontal">
+				<field label="From" content="@min" length="10"/>
+				<field label="To" content="@max" length="10"/>
+				<field label="Currency" content="@currency" length="10"/>
+				per person, excl drinks
+			</group>
+			<group label="Location" content="location" orientation="horizontal">
+				<field label="Address 1" content="@address" length="50"/>
+				<field label="Address 2" content="@subaddress" length="26"/>
+				<field label="City" content="@city" length="26"/>
+				<field label="State" content="@state" length="5"/>
+				<field label="Postcode" content="@postcode" length="9"/>
+				<field label="Country" content="@country" length="20"/>
+			</group>
+		</td><td width="50%" valign="top">
+			<field label="Photo" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td>
+			<field label="Official URL" content="@url" type="url" length="50"/>
+			<field label="Map Link" content="@map" type="url" length="50"/>
+			<field label="Chain" content="@chain" length="50"/>
+			<group label="Hours" content="hours" orientation="horizontal">
+				<field label="Opening time" content="@opening" type="time" length="10"/>
+				<field label="Closing time" content="@closing" type="time" length="10"/>
+			</group>
+			<group orientation="horizontal" content="/review">
+				<field label="Food rating" content="foodrating" type="rating"/>
+				<field label="Decor rating" content="decorrating" type="rating"/>
+				<field label="Service rating" content="servicerating" type="rating"/>
+			</group>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Review" content="/review/description" type="textarea" width="97%"/>
+		</td></tr>
+		</table>
+	</group>
+
+</editor>
+</micro-content>

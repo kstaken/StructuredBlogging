@@ -1,0 +1,43 @@
+<micro-content type="review/magazine" label="Magazine" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject"><div>
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><p><field type="image" content="@image"/></p></if>
+			<if content="/review/rating"><p><b>Rating</b>: <field content="/review/rating" type="rating"/></p></if>
+			<if content="@editor"><p><b>Editor</b>: <field content="@editor"/></p></if>
+			<if content="@year"><p><b>Year</b>: <field content="@year"/></p></if>
+			<if content="@volume"><p><b>Volume</b>: <field content="@volume"/></p></if>
+			<if content="@issue"><p><b>Issue</b>: <field content="@issue"/></p></if>
+			<if content="@category"><p><b>Category</b>: <field content="@category"/></p></if>
+			<if content="@publisher"><p><b>Publisher</b>: <field content="@publisher"/></p></if>
+		</div></group>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%"><tr><td width="50%" valign="top">
+			<field label="Magazine name" content="@name"/>
+			<field label="Editor" content="@editor"/>
+			<group orientation="horizontal">
+				<field label="Year" content="@year" type="int" length="6"/>
+				<field label="Volume" content="@volume" type="int" length="13"/>
+				<field label="Issue" content="@issue" type="int" length="13"/>
+				<field label="Rating" content="/review/rating" type="rating"/>
+			</group>
+			<field label="Category" content="@category"/>
+			<field label="Publisher" content="@publisher"/>
+			<field label="Link" content="@url" type="url"/>
+			</td><td width="50%" valign="top">
+			<field label="Image" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Description" content="/review/description" type="textarea"/>
+		</td></tr>
+		</table>
+	</group>
+	
+</editor>
+</micro-content>

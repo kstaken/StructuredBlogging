@@ -1,0 +1,58 @@
+<micro-content type="review/website" label="Website" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject">
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><p><field content="@image" type="image"/></p></if>
+			<if content="@category"><p><b>Category</b>: <field-map content="@category">
+				<map input="searchengine" output="Search engine"/>
+				<map input="personal" output="Personal site"/>
+				<map input="news" output="News"/>
+				<map input="tool" output="Tool / service"/>
+			</field-map></p></if>
+			<if content="@topic"><p><b>Topic</b>: <field content="@topic"/></p></if>
+			<if content="@yearcreated"><p><b>Year created</b>: <field content="@yearcreated"/></p></if>
+		</group>
+		<if content="rating"><p><b>Overall rating</b>: <field content="rating" type="rating"/></p></if>
+		<if content="contentrating"><p><b>Content rating</b>: <field content="designrating" type="rating"/></p></if>
+		<if content="designrating"><p><b>Design rating</b>: <field content="designrating" type="rating"/></p></if>
+		<if content="navigationrating"><p><b>Navigation rating</b>: <field content="navigationrating" type="rating"/></p></if>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+		<if content="tags"><p><b>Tags</b>: <field content="tags" type="tags"/></p></if>
+	</div></group>
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%"><tr><td width="50%" valign="top">
+			<field label="Site name" content="@name" length="50"/>
+			<field label="Link" content="@url" length="50"/>
+			<group orientation="horizontal">
+				<field label="Category" content="@category" type="select">
+					<option value="searchengine">Search engine</option>
+					<option value="personal">Personal site</option>
+					<option value="news">News</option>
+					<option value="tool">Tool / service</option>
+				</field>
+				<field label="Year created" content="@yearcreated" type="int" length="4"/>
+			</group>
+			<field label="Topic" content="@topic" length="50"/>
+		</td><td width="50%" valign="top">
+			<field label="Image" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td colspan="2">
+		<group orientation="horizontal" content="/review">
+			<field label="Overall" content="rating" type="rating"/>
+			<field label="Content" content="contentrating" type="rating"/>
+			<field label="Design" content="designrating" type="rating"/>
+			<field label="Navigation" content="navigationrating" type="rating"/>
+		</group>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Review" content="/review/description" type="textarea" width="97%"/>
+			<field label="Tags" content="/review/tags" type="tags"/>
+		</td></tr>
+		</table>
+	</group>
+
+</editor>
+</micro-content>

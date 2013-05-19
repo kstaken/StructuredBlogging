@@ -1,0 +1,214 @@
+#!/usr/bin/env python
+
+import sys, os, os.path, random
+
+# This script installs the Structured Blogging MT plugins into
+# ~/public_html/mtsb_test and ~/public_html/wpsb_test.
+
+# You will probably need to hack around a little here to get this to
+# work.  Right now it requires that you have everything set up exactly
+# the same way as Phil, so it probably won't work out of the box.
+
+def ansi(s, *attrs):
+    return "\x1b[%sm%s\x1b[0m" % (';'.join([str(attr) for attr in attrs]), s)
+
+def log(s, *attrs):
+    print ansi(s, 1, *attrs)
+
+def bluelog(s):
+    log(s, 44)
+
+def redlog(s):
+    log(s, 41)
+
+def cmd(s):
+    log(s, 34)
+    ret = os.system(s)
+    if ret:
+        raise Exception("command returned non-zero return code: %d" % ret)
+    return ret
+
+class SBSetup:
+
+    def __init__(self):
+        self.db_info = {}
+        self.sql_stmts = []
+
+    def setup_db(self):
+        config_fn = os.path.expanduser("~/.sb_test_config")
+        if os.path.exists(config_fn):
+            self.db_info = dict([line.strip().split("=",1) for line in open(config_fn).readlines()])
+        # add in anything missing
+        for k,v in {
+                'db_user': 'sb_test',
+                'db_pass': ''.join([chr(random.randint(ord('a'), ord('z'))) for x in range(32)]),
+                'db_host': 'localhost',
+                'root_url': 'http://' + os.popen("hostname", "r").read().strip(),
+                }.items():
+            self.db_info.setdefault(k,v)
+        # and save
+        open(config_fn, "wt").writelines(["%s=%s\n" % (k,v) for k,v in self.db_info.items()])
+
+    def query(self, sql):
+        self.sql_stmts.append("%s;\n" % sql)
+
+    def run_sql(self):
+        os.chdir(self.root)
+        open("dist_tmp/db_setup.sql", "wt").writelines(self.sql_stmts)
+        redlog("Enter your MySQL root password at the prompt")
+#        cmd("cat dist_tmp/db_setup.sql")
+        cmd("mysql -u root -p -e 'source dist_tmp/db_setup.sql'")
+
+    def unpack_app(self, name, src, instdir):
+        log("Unpacking %s from %s into %s" % (name, src, instdir))
+        os.mkdir(instdir)
+        os.chdir(instdir)
+        cmd("tar -zxf %s" % src)
+
+    def make_db(self, dbname, dbscript):
+        self.query("DROP DATABASE IF EXISTS %s" % dbname)
+        self.query("CREATE DATABASE %s" % dbname)
+        if dbscript:
+            self.query("USE %s" % dbname)
+            self.query("SOURCE %s" % dbscript)
+        self.query("GRANT ALL ON %s.* TO %s@localhost IDENTIFIED BY '%s'" % (dbname, self.db_info['db_user'], self.db_info['db_pass']))
+        self.query("FLUSH PRIVILEGES")
+
+    def setup_mt(self, mt_inst_leaf, db_name, comment, db_contents=None):
+        mt_inst = os.path.join(self.test_root, mt_inst_leaf)
+        bluelog("Setting up MT+SB in %s" % mt_inst)
+        self.unpack_app("Movable Type", self.mt_src, mt_inst)
+        cmd("chmod o+w .")
+        cmd("mv MT-3.2-en_US mt")
+        cmd("mkdir -m 777 mt/sbimages")
+        self.make_db(db_name, db_contents)
+        cmd("tar -zxf %s" % self.mtsb_src)
+        cmd("mv %s/plugins/* mt/plugins/" % self.mtsb_name)
+        cmd("rm -vrf %s" % self.mtsb_name)
+
+        config = open("mt/mt-config.cgi", "wt")
+        for line in open("mt/mt-config.cgi-original").readlines():
+            line = line.rstrip()
+            if line.startswith("CGIPath"):
+                print>>config, "CGIPath %s/sb_testing/%s/mt/" % (self.db_info['root_url'], mt_inst_leaf)
+                print>>config, "ObjectDriver DBI::mysql"
+                print>>config, "Database %s" % db_name
+                print>>config, "DBUser %s" % self.db_info['db_user']
+                print>>config, "DBPassword %s" % self.db_info['db_pass']
+                print>>config, "DBHost %s" % self.db_info['db_host']
+            else:
+                print>>config, line
+        del config # close file
+
+        self.add_index_note("Movable Type", mt_inst_leaf, comment)
+
+    def setup_wp(self, wp_inst_leaf, db_name, comment, db_contents=None, install_sb=1):
+        wp_inst = os.path.join(self.test_root, wp_inst_leaf)
+        log("Setting up WP+SB in %s" % wp_inst, 44)
+        self.unpack_app("Wordpress", self.wp_src, wp_inst)
+        cmd("mv wordpress/* .; rmdir wordpress")
+        cmd("mkdir -m 777 sbimages")
+        self.make_db(db_name, db_contents)
+        if install_sb:
+            cmd("tar -zxf %s" % self.wpsb_src)
+            cmd("pushd %s && for f in `find . -type f`; do install -D $f ../$f; done" % self.wpsb_name)
+            cmd("rm -rf %s" % self.wpsb_name)
+        config = open("wp-config-sample.php").read()
+        for before,findtext,repltext in (
+            ("'DB_NAME', 'wordpress'", "wordpress", db_name),
+            ("'DB_USER', 'username'", "username", self.db_info['db_user']),
+            ("'DB_PASSWORD', 'password'", "password", self.db_info['db_pass']),
+            ("'DB_HOST', 'localhost'", "localhost", self.db_info['db_host']),
+            ):
+            config = config.replace(before, before.replace(findtext, repltext))
+        open("wp-config.php", "wt").write(config)
+
+        self.add_index_note("Wordpress", wp_inst_leaf, comment)
+
+    def add_index_note(self, sw, folder, comment):
+        print>>self.index_html, '<li><h2><a href="%s">%s</a> (%s)</h2><p>%s</p></li>' % (
+            folder, folder, sw, comment)
+
+    def main(self, args):
+        self.root = os.path.abspath(os.path.join(os.path.split(os.path.abspath(args[0]))[0], '..'))
+
+        version = open("%s/dist_tmp/sb_website/files/version.txt" % self.root).read().strip()
+
+        archivepath = os.path.join(self.root, 'dist_tmp', 'output')
+
+        self.test_root = os.path.expanduser("~/public_html/sb_testing")
+
+        bluelog("Installing SB plugin v%s from %s into %s" % (version, archivepath, self.test_root))
+
+        log("* Cleaning out previous installs")
+        cmd("rm -rf %s" % self.test_root)
+        os.mkdir(self.test_root)
+
+        file_upload_path = os.path.join(self.test_root, "file_uploads")
+        os.mkdir(file_upload_path)
+        cmd("chmod 777 %s" % file_upload_path)
+
+        self.index_html = open("%s/index.html" % self.test_root, "wt")
+        print>>self.index_html, """<h1>Testing Structured Blogging</h1>
+        
+        <p>The following installations have been prepared for you to test with.  Have fun!</p>
+        
+        <p><b>MT notes</b>: You will have to have CGI enabled in the sb_testing directory for Movable Type to work.  To install MT, go to (base url)/mt/mt.cgi.  Once installed, log in as Melody, password Nelson.  Then configure the blog, and click on 'system overview' and 'plugins', then check that BigPAPI and MT-StructuredBlogging are both working.  If you find that the SB plugin inexplicably fails to do something it should, click 'activity log' and see if something just got logged.</p>
+
+        <p><b>WP notes</b>: WP installation is pretty self-explanatory.  When installed, log in and click on 'plugins', then 'activate' next to the Structured Blogging one.  Use <b>%s</b> as the file upload directory when it comes time to configure that (this will probably result in a url to the file upload dir of <b>/sb_testing/file_uploads</b>).</p>
+
+        """ % file_upload_path
+
+        # find plugins
+        self.mtsb_name = 'structuredblogging-mt-%s' % version
+        self.mtsb_src = '%s/%s.tar.gz' % (archivepath, self.mtsb_name)
+        self.mt_src = '%s/archive_dist/MT-3.2.tar.gz' % self.root
+        if not os.path.exists(self.mt_src):
+            redlog("You need to download MT 3.2 into %s before running this script" % self.mt_src)
+            return
+
+        self.wpsb_name = 'structuredblogging-wp-%s' % version
+        self.wpsb_src = '%s/%s.tar.gz' % (archivepath, self.wpsb_name)
+        self.wp_src = '%s/archive_dist/wordpress_latest.tar.gz' % self.root
+        if not os.path.exists(self.wp_src):
+            cmd("cd %s/archive_dist; wget http://wordpress.org/latest.tar.gz; mv latest.tar.gz wordpress_latest.tar.gz" % self.root)
+        if not os.path.exists(self.wp_src):
+            redlog("You need to download Wordpress into %s before running this script" % self.wp_src)
+            return
+
+        # set up database username/password
+        self.setup_db()
+
+        # and install
+        self.setup_mt("mtsb_pristine", "sb_test_mt_pristine", "SB on top of a fresh MT install")
+        self.setup_wp("wpsb_pristine", "sb_test_wp_pristine", "SB on top of a fresh WP install")
+        self.setup_wp("wp_no_sb", "sb_test_wp_no_sb", "WP without SB", install_sb=0)
+        self.setup_wp("wpsb_upgrade", "sb_test_wp_upgrade", "SB on top of a WP install containing data from WPSB 0.51 (admin pw = foo).  This probably won't work unless the URL is http://workweb/sb_testing/wpsb_upgrade/ ...", db_contents="testing/wpsb_0-51_data.sql")
+
+        #cd ~/public_html
+        #rm -rf wpsb_test
+        #mkdir wpsb_test
+        #cd wpsb_test
+        #tar -zxf ../wordpress_latest.tar.gz
+        #mv wordpress/* .
+        #rmdir wordpress
+        #WPNAME=structuredblogging-wp-$VERSION
+        #tar -zxf $FILES/$WPNAME.tar.gz
+        #mv $WPNAME/wpsb-files .
+        #mv $WPNAME/wp-admin/* wp-admin/
+        #mv $WPNAME/wp-content/plugins/* wp-content/plugins/
+        #rm -rf $WPNAME $WPNAME.tar.gz
+        #cp ../wp/wp-config.php .
+
+        self.run_sql()
+
+        log("All done")
+
+if __name__ == '__main__':
+    cwd = os.getcwd()
+    try:
+        SBSetup().main(sys.argv)
+    finally:
+        log("Shutting down - returning to %s" % cwd)
+        os.chdir(cwd)
+

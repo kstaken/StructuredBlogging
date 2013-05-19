@@ -1,0 +1,113 @@
+<micro-content type="review/song" label="Song" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject"><div>
+		 <if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+		 <if content="@coverart"><field type="image" content="@coverart"/></if>
+			<if content="@band"><p>
+				<b>Artist:</b>
+				<field content="@band"/>
+			</p></if>
+			<group content="/review/rating">
+			 <if content="rating">
+			  <div>Rating: <field content="" type="rating"/></div>
+			 </if>
+			</group>
+			<if content="@media"><p style="clear: left">
+				<b>Media:</b>
+				<field-map content="@media">
+				<map input="cd" output="CD"/>
+				<map input="dvd" output="DVD"/>
+				<map input="vhs" output="VHS"/>
+				<map input="vinyl" output="Vinyl"/>
+				<map input="tape" output="Cassette"/>
+				<map input="file" output="File"/>
+				</field-map>
+			</p></if>
+			<if content="@genre"><p>
+				<b>Genre:</b>
+				<field content="@genre"/>
+			</p></if>
+			<if content="@prod"><p>
+				<b>Producer:</b>
+				<field content="@producer"/>
+			</p></if>
+			<if content="@year"><p>
+				<b>Year:</b>
+				<field content="@year"/>
+			</p></if>
+			<if content="@label"><p>
+				<b>Label:</b>
+				<field content="@label"/>
+			</p></if>
+			<group content="upc" repeat="unlimited"><if content="">
+				<p><b>UPC</b> for <b><field-map content="@media">
+                                <map input="cd" output="CD"/>
+                                <map input="dvd" output="DVD"/>
+                                <map input="vhs" output="VHS"/>
+                                <map input="vinyl" output="Vinyl"/>
+                                <map input="tape" output="Cassette"/>
+                                <map input="file" output="File"/>
+                                </field-map></b>: <field content=""/></p>
+			</if></group>
+			<if content="@coverart"><p>
+				<b>Cover art:</b>
+				<field content="@coverart"/>
+			</p></if>
+			<if content="@song">
+			<p><b>Favorite songs</b></p>
+			<ul>
+			 <group content="song" repeat="unlimited"><if content="">
+			  <li><field content=""/></li>
+			 </if></group>
+			</ul>
+			</if>
+		</div></group>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%"><tr><td valign="top" width="50%">
+			<field label="Song name" content="@name" id="lookup-cd"/>
+			<group orientation="horizontal">
+			 <field label="Artist/band name" content="@band" id="lookup-artist" length="48"/>
+			 <field label="Year" content="@year" type="int" id="lookup-date" length="4"/>
+			</group>
+			<field label="Album" content="@album"/>
+			<group orientation="horizontal">
+			 <field label="Genre" content="@genre" length="44"/>
+			 <field label="Media" content="@media" type="select">
+				<option value="cd">CD</option>
+				<option value="dvd">DVD</option>
+				<option value="vhs">VHS</option>
+				<option value="vinyl">Vinyl</option>
+				<option value="tape">Cassette</option>
+				<option value="file">File</option>
+			 </field>
+			</group>
+			<field label="Producer" content="@producer"/>
+			<field label="Label" content="@label" id="lookup-label"/>
+			<group label="UPC" repeat="unlimited" content="upc" orientation="horizontal" addlabel="Add another UPC">
+			    <field label="Media" content="@media" type="select">
+				<option value="cd">CD</option>
+				<option value="dvd">DVD</option>
+				<option value="vhs">VHS</option>
+				<option value="vinyl">Vinyl</option>
+				<option value="tape">Cassette</option>
+				<option value="file">File</option>
+			    </field>
+			    <field label="UPC" content="" id="lookup-upc" length="46"/>
+			</group>
+			<field label="Rating" content="/review/rating" type="rating"/>
+		</td><td valign="top" width="50%">
+			<field label="Cover art" content="@coverart" type="uploadfile" filetype="image" id="lookup-image"/>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Description" content="/review/description" type="textarea"/>
+		</td></tr></table>
+	</group>
+
+</editor>
+</micro-content>

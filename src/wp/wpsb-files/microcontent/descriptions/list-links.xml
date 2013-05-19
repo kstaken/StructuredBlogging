@@ -1,0 +1,32 @@
+<micro-content type="list/links" label="Links" version="1.0">
+<display media="html">
+	<group content="/list">
+		<h3><field content="title"/></h3>
+		<ul>
+		<group content="link" repeat="unlimited">
+			<li><a><attribute name="href"><field content="@url"/></attribute><field content=""/></a> (tags: <field content="@tags" type="tags"/>)</li>
+		</group>
+		</ul>
+		<p><field content="description"/></p>
+	</group>
+</display>
+<editor>
+	<group content="/list">
+		<table class="sb_boxtable" width="100%">
+		<tr><td>
+			<field label="List title" content="title"/>
+		</td></tr>
+		<tr><td>
+			<group label="Links"  repeat="unlimited" content="link" addlabel="Add another link" orientation="horizontal">
+				<field label="Caption" content="" length="30"/>
+				<field label="URL" content="@url" type="url" length="30"/>
+				<field label="Tags" content="@tags" type="tags" length="30"/>
+			</group>
+		</td></tr>
+		<tr><td>
+			<field label="List notes" content="description" type="textarea" width="97%"/>
+		</td></tr>
+		</table>
+	</group>
+</editor>
+</micro-content>

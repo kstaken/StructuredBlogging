@@ -1,0 +1,118 @@
+<micro-content type="list/xspf-playlist" label="Playlist (in progress)" version="1.0">
+<display media="html">
+	<group content="/playlist"><div>
+			<h3><field content="title"/></h3>
+			<if content="image"><field content="image" type="image"/></if>
+			<p>
+				<b>Author:</b>
+				<field content="creator"/>
+			</p>
+			<p>
+				<b>Notes:</b>
+				<field content="annotation"/>
+			</p>
+			<p>
+				<b>Playlist information URL:</b>
+				<field content="info"/>
+			</p>
+			<p>
+				<b>Permalink should go here:</b>
+				<field content="location"/>
+			</p>
+			<p>
+				<b>ID - must be URL (should be automatic):</b>
+				<field content="identifier"/>
+			</p>
+			<p>
+				<b>Playlist creation date (xsd:dateTime, should be automatic):</b>
+				<field content="date"/>
+			</p>
+			<p>
+				<b>Playlist license URL:</b>
+				<field content="license"/>
+			</p>
+			<group content="attribution" repeat="unlimited"><div>
+				<p>
+					<b>URL of parent playlist:</b>
+					<field content="location"/>
+				</p>
+				<p>
+					<b>Identifier of parent playlist:</b>
+					<field content="identifier"/>
+				</p>
+			</div></group>
+			<group content="trackList"><div>
+			<h4>Tracks</h4>
+				<group content="track" repeat="unlimited"><li>
+					<h5><field content="title"/></h5>
+					<p>
+						<b>Artist:</b>
+						<field content="creator"/>
+					</p>
+					<p>
+						<b>Album:</b>
+						<field content="album"/>
+					</p>
+					<p>
+						<b>Track number:</b>
+						<field content="trackNum"/>
+					</p>
+					<p>
+						<b>Length (milliseconds?!):</b>
+						<field content="duration"/>
+					</p>
+					<p>
+						<b>URL:</b>
+						<field content="location"/>
+					</p>
+					<p>
+						<b>Track canonical ID - ISBN or MusicBrainz ID:</b>
+						<field content="identifier"/>
+					</p>
+					<p>
+						<b>Comment:</b>
+						<field content="annotation"/>
+					</p>
+					<p>
+						<b>Information URL:</b>
+						<field content="info"/>
+					</p>
+				</li></group>
+			</div></group>
+	</div></group>
+
+</display>
+<editor>
+	<group content="playlist">
+		<field content="@version" type="hidden" value="1"/>
+		<field content="@xmlns" type="hidden" value="http://xspf.org/ns/0/"/>
+		<field label="Playlist title" content="title"/>
+		<field label="Playlist author" content="creator"/>
+		<field label="Playlist annotation" content="annotation"/>
+		<field label="Playlist information URL" content="info" type="url"/>
+		<field label="Permalink should go here" content="location" type="url"/>
+<!--		<field label="ID - must be URL (should be automatic)" content="identifier"/>-->
+		<field label="Image" content="image" type="uploadfile" filetype="image"/>
+<!--		<field label="Playlist creation date" content="date" type="datetime"/>-->
+		<field label="License URL" content="license" type="url"/>
+		<group label="Playlist attribution" repeat="unlimited" content="attribution">
+			<field label="Parent playlist link" content="location" type="url"/>
+			<field label="Parent playlist identifier" content="identifier"/>
+		</group>
+		<group label="Tracks" content="trackList">
+			<group label="Track" repeat="unlimited" content="track" addlabel="Add another track">
+				<field label="Track name" content="title"/>
+				<field label="Artist" content="creator"/>
+				<field label="Album" content="album"/>
+				<field label="Track number" content="trackNum" type="int"/>
+				<field label="Length (milliseconds?!)" content="duration" type="time"/>
+				<field label="URL" content="location" type="url"/>
+				<field label="Track canonical ID - ISBN or MusicBrainz ID" content="identifier"/>
+				<field label="Comment" content="annotation"/>
+				<field label="Information URL" content="info" type="url"/>
+			</group>
+		</group>
+	</group>
+
+</editor>
+</micro-content>

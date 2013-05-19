@@ -1,0 +1,66 @@
+<micro-content type="review/hotel" label="Hotel/Resort" version="1.0" >
+<display media="html">
+	<group content="/review/subject"><div class="hreview">
+	<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+	<p><field content="@image" type="image" class="sb-review-image"/></p>
+	<group content="/review">
+		<if content="rating"><p><field content="rating" type="rating"/></p></if>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</group>
+	<if content="@map"><p><a><attribute name="href"><field content="@map"/></attribute>Map</a></p></if>
+	
+	<p><group content="location">
+	<b>Location</b>:
+	<if content="@address"><p><field content="@address"/></p></if>
+	<if content="@subaddress"><p><field content="@subaddress"/></p></if>
+	<p><if content="@city"><field content="@city"/><if content="@state">, </if></if>
+	<if content="@state"><field content="@state"/></if>
+	<if content="@postcode"><field content="@postcode"/></if></p>
+	<if content="@country"><p><field content="@country"/></p></if>
+	</group></p>
+	
+	<if content="activities"><p><b>Activities:</b></p>
+	<p><field content="activities"/></p></if>
+	
+	<if content="historiclocations"><p><b>Historic Locations:</b></p>
+	<p><field content="historiclocations"/></p></if>
+	
+	<if content="touristspots"><p><b>Tourist spots:</b></p>
+	<p><field content="touristspots"/></p></if>
+	
+	</div></group>
+</display>
+	
+<editor>
+	<table class="sb_boxtable" width="100%"><tr><td width="50%" valign="top">
+		<field label="Name" content="/review/subject/@name"/>
+		
+		<group label="Location" content="/review/subject/location" orientation="horizontal">
+			<field label="Address 1" content="@address"/>
+			<field label="Address 2" content="@subaddress" length="26"/>
+			<field label="City" content="@city" length="26"/>
+			<field label="State" content="@state" length="5"/>
+			<field label="Postcode" content="@postcode" length="9"/>
+			<field label="Country" content="@country" length="20"/>
+		</group>
+			
+		<field label="Homepage" content="/review/subject/@url" type="url"/>
+		<field label="Map link" content="/review/subject/@map" type="url"/>
+			
+	</td><td width="50%" valign="top">
+		<field label="Image" content="/review/subject/@image" type="uploadimage"/>
+	</td></tr>
+	<tr><td valign="top">
+		<field label="Activities" content="/review/subject/activities" type="textarea" cols="50"/>
+		<field label="Historic locations" content="/review/subject/historiclocations" type="textarea" cols="50"/>
+	</td><td valign="top">
+		<field label="Tourist spots" content="/review/subject/touristspots" type="textarea" cols="50"/>
+		
+		<field label="Rating" content="/review/rating" type="rating" min="0" max="5"/>
+	</td></tr>
+	<tr><td colspan="2">		
+		<field label="Review text" content="/review/description" type="textarea"/>                
+	</td></tr>
+	</table>
+</editor>
+</micro-content>

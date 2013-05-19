@@ -1,0 +1,10 @@
+<simple-event type="event/concert">
+<when>12/25/2005</when>
+<name>A time of life</name>
+<performer>Seal</performer>
+<price>$30-$50</price>
+<image>http://www.hotels.com/hotels/PHX_CONF-exter-1.jpg</image>
+<tickets>http://www.ticketmaster.com</tickets>
+<location address="1120 W Indian School Rd." suburb="" city="Phoenix" state="Az" postcode="85003" country="USA"/>
+<description>Buy your tickets early</description>
+</simple-event>

@@ -1,0 +1,122 @@
+<micro-content type="review/movie" label="Movie/TV" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject"><div>
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><p><field content="@image" type="image"/></p></if>
+			<if content="@imdburl"><p><a><attribute name="href"><field content="@imdburl"/></attribute>IMDB</a></p></if>
+			<if content="@year"><p><b>Year</b>: <field content="@year"/></p></if>
+			<if content="@writer"><p><b>Writer</b>: <field content="@writer"/></p></if>
+			<if content="@director"><p><b>Director</b>: <field content="@director"/></p></if>
+			<if content="@producer"><p><b>Producer</b>: <field content="@producer"/></p></if>
+			<if content="@length"><p><b>Length</b>: <field content="@length"/></p></if>
+			<if content="@category"><p><b>Category</b>: <field-map content="@category">
+				<map input="drama" output="Drama"/>
+				<map input="comedy" output="Comedy"/>
+				<map input="scifi" output="Sci-Fi"/>
+				<map input="action" output="Action"/>
+				<map input="sports" output="Sports"/>
+				<map input="martialart" output="Martial Arts"/>
+				<map input="war" output="War"/>
+				<map input="foreign" output="Foreign"/>
+				<map input="children" output="Children's"/>
+			</field-map></p></if>
+			<if content="@media"><p><b>Media</b>: <field-map content="@media">
+				<map input="film" output="Film"/>
+				<map input="dvd" output="DVD"/>
+				<map input="vhs" output="Video"/>
+				<map input="tv" output="On TV"/>
+				<map input="vcd" output="Video CD"/>
+				<map input="file" output="File"/>
+			</field-map></p></if>
+			<if content="@studio"><p><b>Studio</b>: <field content="@studio"/></p></if>
+			<if content="@distributor"><p><b>Distributor</b>: <field content="@distributor"/></p></if>
+			<group content="censorrating" repeat="unlimited">
+				<p><b>Rating from <field content="@body"/></b>: <field content=""/></p>
+			</group>
+			<group content="id" repeat="unlimited"><if content="">
+				<p><b>ID in <field content="@service"/></b>: <if content="@url"><a><attribute name="href"><field content="@url"/></attribute><field content=""/></a></if><if op="not" content="@url"><field content=""/></if></p>
+			</if></group>
+			<if content="cast">
+				<h4>Cast:</h4>
+				<group content="cast" repeat="unlimited"><if content="">
+					<li><b><field content="@character"/></b>: <field content=""/></li>
+				</if></group>
+			</if>
+			</div></group>
+		<p><field content="rating" type="rating"/></p>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+			<table class="sb_boxtable" width="100%"><tr><td width="50%" valign="top">
+				<field label="Movie/TV show name" content="@name" id="lookup-movie" length="40"/>
+				<group orientation="horizontal">
+					<field label="Year" content="@year" type="int" length="4" id="lookup-year"/>
+					<field label="Length" content="@length" type="time" length="8" id="lookup-length"/>
+					<field label="Category" content="@category" type="select">
+						<option value="drama">Drama</option>
+						<option value="comedy">Comedy</option>
+						<option value="scifi">Sci-Fi</option>
+						<option value="action">Action</option>
+						<option value="sports">Sports</option>
+						<option value="martialart">Martial Arts</option>
+						<option value="war">War</option>
+						<option value="foreign">Foreign</option>
+						<option value="children">Children's</option>
+					</field>
+					<field label="Media" content="@media" type="select">
+						<option value="dvd">DVD</option>
+						<option value="film">Film</option>						
+						<option value="vhs">Video</option>
+						<option value="tv">On TV</option>
+						<option value="vcd">Video CD</option>
+						<option value="file">File</option>
+					</field>
+				</group>
+				<field label="Homepage" content="@url" length="50"/>
+				<field label="IMDB link" content="@imdburl" length="50"/>
+				<field label="Writer" content="@writer" length="50"/>
+				<field label="Director" content="@director" length="50"/>
+				<field label="Producer" content="@producer" length="50"/>
+				<field label="Studio" content="@studio" length="50" id="lookup-studio"/>
+				<field label="Distributor" content="@distributor" length="50"/>
+		<field label="Rating" content="/review/rating" type="rating"/>
+			</td><td width="50%" valign="top">
+				<field label="Image" content="@image" type="uploadfile" filetype="image" id="lookup-image"/>
+			</td></tr>
+			<tr><td valign="top">
+			<group label="Censor's rating" content="censorrating" orientation="horizontal" repeat="unlimited" addlabel="Add another rating">
+				<field label="Censor body" content="@body" length="30"/>
+				<field label="Rating" content="" length="10" id="lookup-rating"/>
+			</group>
+			<group label="UPC" repeat="unlimited" content="upc" orientation="horizontal" addlabel="Add another UPC">
+				<field label="Media" content="@media" type="select">
+					<option value="dvd">DVD</option>
+					<option value="vhs">VHS</option>
+				</field>
+				<field label="UPC" content="" length="30" id="lookup-upc"/>
+			</group>
+			</td><td>
+			<group label="ID in other system (e.g. Amazon)" repeat="unlimited" content="id" addlabel="Add another ID">
+				<group orientation="horizontal">
+					<field label="Service" content="@service" type="url" length="30" id="lookup-source"/>
+					<field label="ID code" content="" length="30" id="lookup-source-id"/>
+				</group>
+				<field label="Link" content="@url" id="lookup-link" length="50"/>
+			</group>
+			<group label="Cast" repeat="unlimited" content="cast" orientation="horizontal" addlabel="Add another castmember">
+				<field label="Character" content="@character" length="30"/>
+				<field label="Actor" content="" length="30"/>
+			</group>
+			</td></tr>
+			<tr><td colspan="2">
+		<field label="Description" content="/review/description" type="textarea" width="97%"/>
+</td></tr>
+</table>
+	</group>
+
+</editor>
+</micro-content>

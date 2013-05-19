@@ -1,0 +1,24 @@
+<micro-content type="media/image" label="Image" version="1.0">
+ <display media="html">
+  <group content="/media">
+   <p><field content="image" type="image"/></p>
+   <div><field content="description"/></div>
+   <p><i>Tags: <field content="tags"/></i></p>
+  </group>
+ </display>
+ <editor>
+  <group content="/media">
+   <table class="sb_boxtable" width="100%">
+    <tr><td width="50%">
+     <field label="Image Title" content="@title" length="50"/>
+     <field label="Description" content="description" type="textarea" cols="40" width="95%"/>
+    </td><td valign="top">
+     <field label="Image" content="image" type="uploadfile" filetype="image"/>
+    </td></tr>
+    <tr><td colspan="2">
+     <field label="Tags" content="tags" length="112" type="tags"/>
+    </td></tr>
+   </table>
+  </group>
+ </editor>
+</micro-content>

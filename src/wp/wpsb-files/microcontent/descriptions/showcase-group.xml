@@ -1,0 +1,69 @@
+<micro-content type="showcase/group" label="Group Showcase" category="Group Showcase" version="1.0">
+ <display media="html">
+  <group content="/group">
+   <h3><if content="@url"><a><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if>
+    <if op="not" content="@url"><field content="@name"/></if></h3>
+
+   <if content="image"><field content="image" type="image" class="sb-review-image"/></if>
+
+   <if content="moderator">
+    <p><b>Moderator</b>: <if content="moderator/@url"><a><attribute name="href"><field content="moderator/@url"/></attribute><field content="moderator"/></a></if>
+     <if op="not" content="moderator/@url"><field content="moderator"/></if></p></if>
+
+   <group content="blog" repeat="unlimited"><if content="">
+    <p><b>Link</b>: <a><attribute name="href"><field content="@url"/></attribute><field content=""/></a></p>
+   </if></group>
+
+   <if content="quote"><p><b>Quote</b>: <field content="quote"/></p><if content="quote/@author"><p>-- <field content="quote/@author"/></p></if></if>
+
+   <if content="principles"><p><b>Principles</b>: <field content="principles"/></p></if>
+
+   <if content="@datefounded"><p><b>Founding date</b>: <field content="@datefounded"/></p></if>
+
+   
+   
+  </group>
+ </display>
+ <editor>
+  <group content="/group">
+
+   <!-- subject info -->
+   <table class="sb_boxtable" border="0" width="100%">
+    <tr>
+     <td width="50%">
+      <field label="Group name" content="@name" length="50"/>
+      <field label="Location URL" content="@url" length="50"/>
+      <field label="Moderator" content="moderator" length="50"/>
+      <field label="Moderator URL" content="moderator/@url" length="50"/>
+      <group label="Blog links">
+       <group content="blog" repeat="unlimited" addlabel="Add another blog link">
+        <field label="Blog Title" content="" length="48"/>
+        <field label="Blog URL" content="@url" length="48"/>
+       </group>
+      </group>
+     </td>
+     <td valign="top"><!-- photo section -->
+      <field label="Group image" content="image" type="uploadfile" filetype="image"/>
+     </td>
+    </tr>
+    <tr>
+     <td colspan="2">
+      <field label="Description" content="description" type="textarea" cols="40" width="98%"/>
+     </td>
+    </tr>
+    <tr>
+     <td><field label="Quote" content="quote" type="textarea" cols="40" width="95%"/></td>
+     <td><field label="Principles" content="principles" type="textarea" cols="40" width="95%"/></td>
+    </tr>
+    <tr>
+     <td><field label="Quote Author" content="quote/@author" length="50"/></td>
+     <td><field label="Date Founded" content="@datefounded" type="date"/></td>
+    </tr>
+    <tr><td colspan="2">
+     <field label="Tags" content="tags" type="tags" length="112"/>
+    </td></tr>
+   </table>
+
+  </group><!-- showcase -->
+ </editor>
+</micro-content>

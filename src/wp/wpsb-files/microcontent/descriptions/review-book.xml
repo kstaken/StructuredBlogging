@@ -1,0 +1,41 @@
+<micro-content type="review/book" label="Book" version="1.0">
+<display media="html">
+	<group content="/review"><div>
+		<group content="subject"><div class="hreview">
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><p><field type="image" content="@image"/></p></if>
+			<if content="/review/rating"><p><b>Rating</b>: <field content="/review/rating" type="rating"/></p></if>
+			<if content="@author"><p><b>Author</b>: <field content="@author"/></p></if>
+			<if content="@editor"><p><b>Editor</b>: <field content="@editor"/></p></if>
+			<if content="@year"><p><b>Year</b>: <field content="@year"/></p></if>
+			<if content="@category"><p><b>Category</b>: <field content="@category"/></p></if>
+			<if content="@publisher"><p><b>Publisher</b>: <field content="@publisher"/></p></if>
+		</div></group>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%">
+		<tr><td width="50%" valign="top">
+			<field label="Book name" content="@name" id="lookup-book" length="40"/>
+			<field label="Author" content="@author" id="lookup-author" length="50"/>
+			<field label="Editor" content="@editor" length="50"/>
+			<group orientation="horizontal">
+				<field label="Year" content="@year" type="int" length="6" id="lookup-year"/>
+				<field label="Rating" content="/review/rating" type="rating"/>
+			</group>
+			<field label="Category" content="@category" length="50"/>
+			<field label="Publisher" content="@publisher" id="lookup-publisher" length="50"/>
+			<field label="Link" content="@url" type="url" id="lookup-link" length="50"/>
+			<field label="ISBN" content="@isbn" id="lookup-isbn" length="50"/>
+		</td><td width="50%" valign="top">
+			<field label="Image" content="@image" type="uploadfile" filetype="image" id="lookup-image"/>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Description" content="/review/description" type="textarea" cols="95" width="98%"/>
+		</td></tr></table>
+	</group>
+</editor>
+</micro-content>

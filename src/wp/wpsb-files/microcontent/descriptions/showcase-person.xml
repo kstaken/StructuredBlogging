@@ -1,0 +1,78 @@
+<micro-content type="showcase/person" label="People Showcase" category="People Showcase" version="1.0">
+ <display media="html">
+  <group content="/showcase">
+   <h3><field content="@firstname"/> <field content="@lastname"/></h3>
+   <if content="image"><field content="image" type="image" class="sb-review-image"/></if>
+   <if content="address"><p><b>Where</b>: <field content="address/@city"/>, <field content="address/@state"/>, <field content="address/@country"/></p></if>
+   <if content="@age"><p><b>Age</b>: <field content="@age"/></p></if>
+   <if content="job"><p><b>Job</b>: <field content="job"/>, at <field content="job/@employer"/></p></if>
+   <group content="blog" repeat="unlimited"><if content="">
+    <p><b>Blog</b>: <a><attribute name="href"><field content="@url"/></attribute><field content=""/></a></p>
+   </if></group>
+   <if content="description"><p><b>Profile</b>: <field content="description"/></p></if>
+   <if content="contributions"><p><b>Contributions</b>: <field content="contributions"/></p></if>
+   <if content="quote"><p><b>Quote</b>: <field content="quote"/></p><if content="quote/@author"><p>-- <field content="quote/@author"/></p></if></if>
+   <if content="wishlist"><p><b>Wish list</b><if content="wishlist/@url"> (<a><attribute name="href"><field content="wishlist/@url"/></attribute>URL</a>)</if>: <field content="wishlist"/></p></if>
+
+   <if content="movies"><p><b>Favourite movies</b>: <field content="movies"/></p></if>
+   <if content="books"><p><b>Favourite books</b>: <field content="books"/></p></if>
+   <if content="musicians"><p><b>Favourite musicians</b>: <field content="musicians"/></p></if>
+   <if content="food"><p><b>Favourite food</b>: <field content="food"/></p></if>
+
+  </group>
+ </display>
+ <editor>
+  <group content="/showcase">
+
+  <!-- subject info -->
+  <table class="sb_boxtable" border="0" width="100%">
+   <tr>
+    <td valign="top"><!-- personal info -->
+     <group orientation="horizontal">
+      <field label="First name" content="@firstname" length="20"/>
+      <field label="Last name" content="@lastname" length="20"/>
+     </group>
+     <group orientation="horizontal">
+      <field label="City" content="address/@city" length="30"/>
+      <field label="State" content="address/@state" length="10"/>
+     </group>
+     <group orientation="horizontal">
+      <field label="Country" content="address/@country" length="30"/>
+      <field label="Age" content="@age" type="int" length="10"/>
+     </group>
+     <group orientation="horizontal">
+      <field label="Job" content="job" length="20"/>
+      <field label="At" content="job/@employer" length="20"/>
+     </group>
+    </td>
+    <td valign="top"><!-- photo section -->
+     <field label="Picture of this person" content="image" type="uploadfile" filetype="image"/>
+    </td>
+   </tr>
+   <tr>
+    <td valign="top">
+     <group label="Blog Links" content="blog" repeat="unlimited" addlabel="Add another blog link">
+      <field label="Blog Title" content="" length="48"/>
+      <field label="Blog URL" content="@url" length="48"/>
+     </group>
+    </td>
+   </tr>
+   <tr>
+    <td valign="top"><field label="Social Profile - Description - History" content="description" type="textarea" cols="40" width="95%"/>
+     <field label="Quote" content="quote" type="textarea" cols="40" width="95%"/>
+     <field label="Quote Author" content="quote/@author" length="48"/></td>
+    <td valign="top"><field label="Significant Contributions" content="contributions" type="textarea" cols="40" width="95%"/>
+     <field label="Wish List" content="wishlist" type="textarea" cols="40" width="95%"/>
+     <field label="Wish List URL" content="wishlist/@url" length="50"/></td>
+   </tr>
+   <tr>
+    <td valign="top"><field label="Favorite Movies" content="movies" type="textarea" cols="40" width="95%"/>
+     <field label="Favorite Musicians" content="musicians" type="textarea" cols="40" width="95%"/></td>
+    <td valign="top"><field label="Favorite Books" content="books" type="textarea" cols="40" width="95%"/>
+     <field label="Favorite Food" content="food" type="textarea" cols="40" width="95%"/></td>
+   </tr>
+  </table>
+
+  </group><!-- showcase -->
+ </editor>
+</micro-content>

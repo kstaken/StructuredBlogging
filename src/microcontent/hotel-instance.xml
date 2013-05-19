@@ -1,0 +1,11 @@
+<simple-review type="review/hotel">
+    <subject name="Scottsdale Resort &amp; Conference Center" image="http://www.hotels.com/hotels/PHX_CONF-exter-1.jpg" map="">
+        <location locationtype="todo3" city="Scottsdale" state="Az" region="Southwest" country="United States"/>
+        <activities>Swimming, Gym, Horseback Riding, Golf</activities>
+        <historiclocations>Old town Scottsdale</historiclocations>
+        <touristspots>Herberger Theater</touristspots>
+    </subject>
+    <rating min="0" max="5">3</rating>
+    <description>The Scottsdale Resort &amp; Conference Center is located 12 miles from Phoenix Sky Harbor International Airport (Ariz.). Private transportation carries guests directly to the resort, eliminating travel hassles.
+                 Elegant décor, lush landscaping, tranquil patios, custom furnishings, and original artwork reflect the Scottsdale Resort &amp; Conference Center's commitment to guest satisfaction. The hotel offers 50 meeting rooms accommodating groups from 10 to 1,000. The business and media centers are extensive, professional facilities capable of producing flyers, banners, signs, audio recordings and video productions. After meetings, guests can relax around two pools, or exercise in the fitness center with personal trainers. The spa and salon offer various European hair and body treatments.</description>
+</simple-review>

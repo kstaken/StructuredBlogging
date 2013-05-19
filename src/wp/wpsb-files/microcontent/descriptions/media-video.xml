@@ -1,0 +1,106 @@
+<micro-content type="media/video" label="Video" category="Video" version="1.0">
+ <!-- html display template -->
+ <display media="html">
+  <group content="/media">
+   <if content="@title"><h3><field content="@title"/></h3></if>
+   <p><a><attribute name="href"><field content="@mediaurl"/></attribute>Download</a><if content="@url"> | <a><attribute name="href"><field content="@url"/></attribute>Link</a></if></p>
+   <if content="@image"><field content="@image" type="image"/></if>
+   <if content="@artist"><p><b>Artist</b>: <field content="@artist"/></p></if>
+   <if content="@duration"><p><b>Duration</b>: <field content="@duration"/></p></if>
+   <if content="@created"><p><b>Created</b>: <field content="@created"/></p></if>
+   <if content="@location"><p><b>Location</b>: <field content="@location"/></p></if>
+   <if content="@category"><p><b>Category</b>: <field content="@category"/></p></if>
+   <if content="@license"><p><b>License</b>: <field content="@license"/></p></if>
+   <group content="participant" repeat="unlimited">
+    <p><b><field content="@role"/></b>: <field content=""/></p>
+   </group>
+   <p><field content="description"/></p>
+   <if content="tags"><p><i>Tags: <field content="tags"/></i></p></if>
+  </group>
+ </display>
+ <!-- RSS display template, including media RSS -->
+ <display media="rss"><group content="/media"><if content="@mediaurl">
+  <enclosure><attribute name="url"><field content="@mediaurl"/></attribute><if content="@filesize"><attribute name="length"><field content="@filesize"/></attribute></if><if content="@mimetype"><attribute name="type"><field content="@mimetype"/></attribute></if></enclosure>
+  <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="video"><attribute name="url"><field content="@mediaurl"/></attribute><if content="@filesize"><attribute name="fileSize"><field content="@filesize"/></attribute></if><if content="@mimetype"><attribute name="type"><field content="@mimetype"/></attribute></if><if content="@expression"><attribute name="expression">sample | full | nonstop</attribute></if><if content="@bitrate"><attribute name="bitrate"><field content="@bitrate"/></attribute></if><if content="@framerate"><attribute name="framerate"><field content="@framerate"/></attribute></if><if content="@samplingrate"><attribute name="samplingrate"><field content="@samplingrate"/></attribute></if><if content="@channels"><attribute name="channels"><field content="@channels"/></attribute></if><if content="@duration"><attribute name="duration"><field content="@duration"/></attribute></if><if content="@height"><attribute name="height"><field content="@height"/></attribute></if><if content="@width"><attribute name="width"><field content="@width"/></attribute></if><if content="@language"><attribute name="lang"><field content="@language"/></attribute></if></media:content>
+ </if></group></display>
+ <!-- editor template -->
+ <editor>
+  <group content="/media">
+   <table class="sb_boxtable" border="0" width="100%"><tr>
+    <td valign="top" width="50%"><!-- fields -->
+     <field label="Video Title" content="@title" length="50"/>
+     <field label="Video" type="uploadfile" content="@mediaurl" filetype="video"/>
+     <field label="Artist" content="@artist" length="50"/>
+     <field label="Creation Date" content="@created" length="20" type="date"/>
+     <field label="URL associated with this post" content="@url" length="50"/>
+    </td>
+    <td valign="top"><!-- uploads -->
+     <field label="Image" type="uploadfile" content="@image" filetype="image"/>
+    </td>
+   </tr>
+   <tr>
+    <td valign="top">
+     <group orientation="horizontal">
+      <field label="Category" type="select" content="@category">
+       <option>Speech</option>
+      </field>
+      <field label="License" type="select" content="@license">
+       <option value="cc-by-nc-nd">Creative Commons BY-NC-ND</option>
+       <option value="cc-by-nc-sa">Creative Commons BY-NC-SA</option>
+       <option value="cc-by-nc">Creative Commons BY-NC</option>
+       <option value="cc-by-nd">Creative Commons BY-ND</option>
+       <option value="cc-by-sa">Creative Commons BY-SA</option>
+       <option value="cc-by">Creative Commons BY</option>
+       <option value="publicdomain">Public Domain</option>
+       <option value="reserved">All rights reserved</option>
+      </field>
+      </group>
+      <field label="Filming location" content="@location" length="50"/>
+      <group orientation="horizontal">
+       <field label="Duration (s)" content="@duration" length="10"/>
+       <field label="Video file type" content="@mimetype" type="select">
+        <option value="">Unknown</option>
+        <option value="video/mpeg">MPEG</option>
+        <option value="video/mp4">MP4</option>
+        <option value="video/quicktime">Quicktime</option>
+        <option value="video/x-ms-asf">ASF/ASX</option>
+        <option value="video/x-ms-wmv">WMV</option>
+        <option value="video/x-msvideo">AVI</option>
+        <option value="application/x-shockwave-flash">Flash (SWF)</option>
+       </field>
+      </group>
+      <group orientation="horizontal">
+       <field label="File size (bytes)" content="@filesize" type="int" length="15"/>
+       <field label="Bitrate (kbit/s)" content="@bitrate" type="int" length="5"/>
+      </group>
+      <group orientation="horizontal">
+       <field label="Sampling rate (kHz)" content="@samplingrate" length="5"/>
+       <field label="Number of channels" content="@channels" type="int" length="3"/>
+      </group>
+      <group orientation="horizontal">
+       <field label="Width (pixels)" content="@width" type="int" length="5"/>
+       <field label="Height (pixels)" content="@height" type="int" length="5"/>
+      </group>
+      <field label="Language code (en, fr, ...)" content="@language" length="2"/>
+     </td>
+     <td valign="top">
+      <group label="Participants in video" content="participant" repeat="unlimited" orientation="horizontal" addlabel="Add another participant">
+       <field label="Name" length="30" content=""/>
+       <field label="Role" type="select" content="@role">
+        <option>Producer</option>
+        <option>Director</option>
+        <option>Actor</option>
+       </field>
+      </group>
+     </td>
+    </tr>
+    <tr>
+     <td colspan="2">
+      <field label="Description" content="description" type="textarea" cols="95" width="95%"/>
+      <field label="Tags" content="tags"/>
+     </td>
+    </tr>
+   </table>
+  </group>
+ </editor>
+</micro-content>

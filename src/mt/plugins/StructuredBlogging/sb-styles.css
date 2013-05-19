@@ -1,0 +1,57 @@
+/*
+
+	Stylesheet for Structured Blogging plugin.
+	(C) 2005 PubSub Concepts
+
+*/
+
+.structuredblogging-type-menu {
+	background-color: #8FAEBE;
+	color: #FFF;
+	padding: 15px 20px;
+	text-align: center;
+}
+
+/*.body_structuredblogging {
+	border: solid 1px #8FAEBE;
+	padding: 15px 20px;
+}*/
+
+fieldset.sb_titlediv {
+	border: solid 1px #8FAEBE; /*#EAF2FF;*/
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-right: 1em;
+	margin-left: 1em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+fieldset.sb_titlediv legend {
+	font-weight: bold;
+}
+
+fieldset.sb_titlediv div {
+}
+
+.sb_boxtable {
+}
+
+.sb_boxtable tr td {
+	border: solid 1px #6798d0; /*707070;*/
+	background-color: #dde6ef; /*F5F9FF;*/
+}
+
+.sb_grouplegend {
+	font-size: 1.2em;
+}
+
+.sb_lookup_window {
+    width:400px; height:300px; position:absolute; z-index:101; background-color: #FFFFFF; border-style:solid; border-width: 1px; overflow: auto;
+}
+
+.sb_lookup_cancel {
+    float:right;
+    margin: 5px;
+}

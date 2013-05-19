@@ -1,0 +1,58 @@
+<micro-content type="review/event" label="Event" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+		<if content="@image"><field content="@image" type="image"/></if>
+		<if content="@eventtype"><p><b>Event type</b>: <field-map content="@eventtype">
+			<map input="party" output="Party"/>
+			<map input="concert" output="Concert"/>
+			<map input="reception" output="Reception"/>
+			<map input="wedding" output="Wedding"/>
+			<map input="funeral" output="Funeral"/>
+		</field-map></p></if>
+		<if content="@date"><p><b>Date</b>: <field content="@date"/></p></if>
+		<if content="@map"><p><a><attribute name="href"><field content="@map"/></attribute>Map</a></p></if>
+		<if content="rating"><p><b>Rating</b>: <field content="rating" type="rating"/></p></if>
+		<group repeat="unlimited" content="link"><if content="@about">
+			<p><b>Link</b>: <a><attribute name="href"><field content="@about"/></attribute><field content=""/></a></p>
+		</if></group>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+		<group content="link" repeat="unlimited">
+			<li><a><attribute name="href"><field content="@url"/></attribute><field content=""/></a></li>
+		</group>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review">
+		<table class="sb_boxtable" width="100%"><tr><td valign="top" width="50%">
+			<group orientation="horizontal">
+				<field label="Event type" content="@eventtype" type="select">
+					<option value="party">Party</option>
+					<option value="concert">Concert</option>
+					<option value="reception">Reception</option>
+					<option value="wedding">Wedding</option> 
+					<option value="funeral">Funeral</option>
+				</field>
+				<field label="Event name" content="@name" length="40"/>
+			</group>
+			<field label="Date" content="@date" type="date"/>
+			<field label="Official URL" content="@url" type="url"/>
+			<field label="Map Link" content="@map" type="url"/>
+			
+			<field label="Rating" content="rating" type="rating"/>
+		</td><td valign="top" width="50%">
+			<field label="Image" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Review" content="description" type="textarea"/>
+			
+			<group label="Links to other reviews" content="link" repeat="unlimited" addlabel="Add another link" orientation="horizontal">
+				<field label="Description" content="" length="50"/>
+				<field label="Link" content="" type="@url" length="30"/>
+			</group>
+		</td></tr>
+		</table>
+	</group>
+</editor>
+</micro-content>

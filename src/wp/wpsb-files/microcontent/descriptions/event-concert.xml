@@ -1,0 +1,72 @@
+<micro-content type="event/concert" label="Concert" version="1.0" >
+    <display media="html"><group content="/event">
+        <div>             
+            <field content="image" type="image"/>
+            <h3><field content="name"/></h3>
+	    <p><b>Artist/performer</b>: <field content="performer"/></p>
+	    <p><b>Price</b>: <field content="price"/><if content="tickets"> (<a><attribute name="href"><field content="tickets"/></attribute>buy tickets</a>)</if></p>
+            <p><b>Begins</b>: <field content="begins" type="datetime"/></p>
+            <p><b>Ends</b>: <field content="ends" type="datetime"/></p>
+        </div>
+			<p><group content="/event/location">
+				<b>Location</b>:
+				<if content="@address"><p><field content="@address"/></p></if>
+				<if content="@subaddress"><p><field content="@subaddress"/></p></if>
+				<p><if content="@city"><field content="@city"/><if content="@state">, </if></if>
+				<if content="@state"><field content="@state"/></if>
+				<if content="@postcode"><field content="@postcode"/></if></p>
+				<if content="@country"><p><field content="@country"/></p></if>
+			</group></p>
+	<group content="link" repeat="unlimited">
+	 <if content="">
+	  <p><b>Link</b>: <a><attribute name="href"><field content="@url"/></attribute><field content=""/></a></p>
+	 </if>
+	</group>
+        <div><field content="description"/></div>
+    </group></display>
+    
+    <editor>
+      <group content="/event">
+	<table class="sb_boxtable" width="100%">
+	<tr><td valign="top" width="50%">
+	        <field label="Concert name" content="name"/>
+	        <field label="Artist/performer" content="performer"/>
+	        <field label="Price" content="price"/>
+		<field label="Ticket sales URL" content="tickets" type="url"/>
+		<field label="Starts at" content="begins" type="datetime"/>
+		<field label="Finishes at" content="ends" type="datetime"/>
+	</td><td valign="top" width="50%">
+		<field label="Image" content="image" type="uploadfile" filetype="image"/>
+	</td></tr>
+        <tr><td colspan="2">
+	        <group label="Location" content="location" orientation="horizontal">
+	            <field label="Address 1" content="@address" length="38"/>        
+	            <field label="Address 2" content="@subaddress" length="38"/>        
+	            <field label="City" content="@city" length="20"/>        
+	            <field label="State" content="@state" length="10"/>
+	            <field label="Postal code" content="@postcode" length="10"/>
+	            <field label="Country" content="@country" length="20"/>
+	        </group>
+	</td></tr>
+        <tr><td colspan="2">
+	        <field label="Notes" content="description" type="textarea" width="97%"/>
+		<group label="Links to this concert" content="link" repeat="unlimited" addlabel="Add another link">
+			<field label="Link title" content="" length="100"/>
+			<field label="URL" content="@url" type="url" length="100"/>
+		</group>
+	</td></tr>
+	</table>
+      </group>
+    </editor>
+</micro-content>
+
+            
+
+
+
+
+
+
+
+
+

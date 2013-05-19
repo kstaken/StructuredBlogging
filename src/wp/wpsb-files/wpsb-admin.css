@@ -1,0 +1,30 @@
+/*
+
+	Styles for the Structured Blogging editor.
+
+*/
+
+#foo {
+	background-color: red;
+	font-size: 5em;
+}
+
+#sb_titlediv {
+	float: left;
+	margin-right: 5px;
+}
+
+.sb_groupbox, table.sb_boxtable tr td {
+/*	float: left;*/
+	border: solid 1px #6798d0;
+	background-color: #dde6ef;
+}
+
+.sb_lookup_window {
+    width:400px; height:300px; position:absolute; z-index:101; background-color: #FFFFFF; border-style:solid; border-width: 1px; overflow: auto;
+}
+
+.sb_lookup_cancel {
+    float:right;
+    margin: 5px;
+}

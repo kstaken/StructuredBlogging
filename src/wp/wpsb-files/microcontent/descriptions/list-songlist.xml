@@ -1,0 +1,59 @@
+<micro-content display="false" type="list/songlist" label="Song List (need ui)" version="1.0" >
+    <display media="html">   
+        <style type="text/css">
+            .sb-songlist
+            {
+                font-size: small;
+            }            
+        </style>
+        <div>             
+            <h3><field content="/songlist/title"/></h3>
+            <field content="/songlist/description"/>            
+        </div>
+        <p/>
+        <div>
+            <table class="sb-songlist">
+                <th>Title</th><th>Artist</th><th>Album</th><th>Song Length</th>
+                <group repeat="unlimited" content="/songlist/song">
+                    <tr>
+                        <td>
+                            <field content="title"/>
+                        </td>
+                        <td>
+                            <field content="artist"/>
+                        </td>
+                        <td>
+                            <field content="album"/>
+                        </td>
+                        <td>
+                            <field content="length" type="time"/>            
+                        </td>
+                    </tr>
+                </group>        
+            </table>            
+        </div>
+    </display>
+    
+    <editor>
+        <field label="Playlist title" content="/songlist/title" length="40"/>        
+        <field label="Playlist description" content="/songlist/description" length="40"/>
+        
+        <group label="Songs" repeat="unlimited" content="/songlist/song" orientation="horizontal">
+            <field label="Title" content="title" length="30"/>
+            <field label="Artist" content="artist" length="30"/>
+            <field label="Album" content="album" length="30"/>
+            <field label="Song length" content="length" type="time" length="5"/>            
+        </group>        
+    </editor>
+</micro-content>
+        
+            
+
+
+
+
+
+
+
+
+

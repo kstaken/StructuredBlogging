@@ -1,0 +1,112 @@
+
+/*
+ * Copyright (c) 2005 PubSub Concepts, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation; either version 2 of the License, or 
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but 
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along 
+ * with this program; if not, write to the Free Software Foundation, Inc., 
+ * 675 Mass Ave, Cambridge, MA 02139, USA.  
+ */
+ 
+ /* 
+ * default styles for the wp structured blog entries.  
+ *
+ * note that images are given relative to this file.  we 
+ * expect the stylesheet and the images to be in the same
+ * directory.
+ *
+ * by default, this stylesheet is included in html pages that 
+ * have structured blog entries.  in the alternative, this 
+ * file could be removed and entries for the various classes
+ * could be put into another stylesheet.
+ *
+ * the easiest way to disable the stylesheet is to use the
+ * options page for structured blogging; in the alternative,
+ * edit or delete this file.
+ */
+
+/* default bg for events */
+.x-wpsb-simple-event
+{
+	background: url( "calendar.gif" ) center top no-repeat;
+}
+
+/* no default for this one; rather, we have subtypes */
+.x-wpsb-simple-review
+{
+}
+
+/* subtypes for various review types */
+.x-wpsb-review-book { background: url( "book.gif" ) center top no-repeat; }
+.x-wpsb-review-dvd { background: url( "movie.gif" ) top; }
+.x-wpsb-review-cd { background: url( "cd.gif" ) left top no-repeat; }
+.x-wpsb-review-movie { background: url( "movie.gif" ) top ; }
+
+/* the rating, e.g. 3 out of 5 */
+.x-wpsb-rating
+{
+	font-weight: bold;
+}
+
+/* 
+	for displaying "stars" in reviews (e.g. 4/5 stars), these
+	styles use images.  if you take out the styles, the row 
+	should disappear.
+*/
+.x-wpsb-fullstar, .sb-fullstar
+{
+	background: url( "full-star.gif" ) no-repeat;
+	display: inline;
+	width: 20px;
+	height: 20px;
+	float: left;
+}
+
+/* this is the empty star, basically a placeholder */
+.x-wpsb-emptystar, .sb-emptystar
+{
+	background: url( "empty-star.gif" ) no-repeat;
+	display: inline;
+	width: 20px;
+	height: 20px;
+	float: left;
+}
+
+/* end the row of stars (if displayed) */
+.x-wpsb-endstars
+{
+	clear: left;
+}
+
+/* a bit of padding for the product name header in reviews. */
+.x-wpsb-review-product
+{
+	font-weight: bold; 
+	margin-top: 4px;
+	padding-top: 4px;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
+}
+
+/* common headers for events */
+.x-wpsb-event-location, .x-wpsb-event-date, .x-wpsb-event-information
+{
+	font-weight: bold;
+}
+
+/* add a bit of spacing for the role header */
+.x-wpsb-event-role
+{
+	padding-top: 4px;
+	font-weight: bold;
+}
+

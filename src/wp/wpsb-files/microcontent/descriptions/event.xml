@@ -1,0 +1,55 @@
+<micro-content type="event/generic" label="Event" version="1.0" >
+<display media="html">
+	<group content="/event">
+		<p><field content="image" type="image"/></p>
+		<h3><field content="name"/></h3>
+		<p><b>Begins</b>: <field content="begins" type="datetime"/></p>
+		<p><b>Ends</b>: <field content="ends" type="datetime"/></p>
+		<p><group content="/event/location">
+			<b>Location</b>:
+			<if content="@address"><p><field content="@address"/></p></if>
+			<if content="@subaddress"><p><field content="@subaddress"/></p></if>
+			<p><if content="@city"><field content="@city"/><if content="@state">, </if></if>
+			<if content="@state"><field content="@state"/></if>
+			<if content="@postcode"><field content="@postcode"/></if></p>
+			<if content="@country"><p><field content="@country"/></p></if>
+		</group></p>
+		<group content="link" repeat="unlimited"><if content="">
+			<p><b>Link</b>: <a><attribute name="href"><field content="@url"/></attribute><field content=""/></a></p>
+		</if></group>
+		<p><field content="description"/></p>
+	</group>
+</display>
+
+<editor>
+	<group content="/event">
+	<table class="sb_boxtable" width="100%">
+	<tr><td valign="top" width="50%">
+		<field label="Event name" content="name" length="50"/>
+	</td><td valign="top" width="50%">
+		<field label="Image" content="image" type="uploadfile" filetype="image"/>
+	</td></tr>
+	<tr><td colspan="2">
+		<field label="Starts at" content="begins" type="datetime"/>
+		<field label="Finishes at" content="ends" type="datetime"/>
+		<group label="Location" content="location" orientation="horizontal">
+			<field label="Address 1" content="@address" length="38"/>        
+			<field label="Address 2" content="@subaddress" length="38"/>        
+			<field label="City" content="@city" length="20"/>        
+			<field label="State" content="@state" length="10"/>
+			<field label="Postal code" content="@postcode" length="10"/>
+			<field label="Country" content="@country" length="20"/>
+		</group>
+	</td></tr>
+	<tr><td colspan="2">
+		<field label="Event description" content="description" type="textarea" width="97%"/>
+		<group label="Links to this event" content="link" repeat="unlimited" addlabel="Add another link" orientation="horizontal">
+			<field label="Link title" content="" length="50"/>
+			<field label="URL" content="@url" type="url" length="50"/>
+		</group>
+	</td></tr>
+	</table>
+	
+	</group>
+</editor>
+</micro-content>

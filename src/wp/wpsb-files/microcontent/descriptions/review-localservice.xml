@@ -1,0 +1,70 @@
+<micro-content type="review/localservice" label="Local Service" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject">
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><p><field content="@image" type="image"/></p></if>
+			<if content="@category"><p><b>Category</b>: <field-map content="@category">
+				<map input="health" output="Health"/>
+				<map input="automotive" output="Car maintenance"/>
+				<map input="therapy" output="Therapy"/>
+				<map input="other" output="Other"/>
+			</field-map></p></if>
+			<if content="@provider"><p><b>Provider</b>: <field content="@provider"/></p></if>
+			<if content="@pricerange"><p><b>Price range</b>: <field content="@pricerange"/></p></if>
+			<p><group content="location">
+				<b>Location</b>:
+				<if content="@address"><p><field content="@address"/></p></if>
+				<if content="@subaddress"><p><field content="@subaddress"/></p></if>
+				<p><if content="@city"><field content="@city"/><if content="@state">, </if></if>
+				<if content="@state"><field content="@state"/></if>
+				<if content="@postcode"><field content="@postcode"/></if></p>
+				<if content="@country"><p><field content="@country"/></p></if>
+			</group></p>
+		</group>
+		<if content="rating"><p><b>Overall rating</b>: <field content="rating" type="rating"/></p></if>
+		<if content="servicerating"><p><b>Service rating</b>: <field content="servicerating" type="rating"/></p></if>
+		<if content="valuerating"><p><b>Value rating</b>: <field content="valuerating" type="rating"/></p></if>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+		<if content="tags"><p><b>Tags</b>: <field content="tags" type="tags"/></p></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%"><tr><td width="50%" valign="top">
+			<field label="Service" content="@name"/>
+			<field label="Link" content="@url"/>
+			<field label="Category" content="@category" type="select">
+				<option value="health">Health</option>
+				<option value="automotive">Car maintenance</option>
+				<option value="therapy">Therapy</option>
+				<option value="other">Other</option>
+			</field>
+			<field label="Provider name" content="@provider"/>
+			<field label="Price range" content="@pricerange"/>
+			<group label="Location" content="location" orientation="horizontal">
+				<field label="Address 1" content="@address"/>
+				<field label="Address 2" content="@subaddress" length="26"/>
+				<field label="City" content="@city" length="26"/>
+				<field label="State" content="@state" length="5"/>
+				<field label="Postcode" content="@postcode" length="9"/>
+				<field label="Country" content="@country" length="20"/>
+			</group>
+			<group orientation="horizontal" content="/review">
+				<field label="Overall" content="rating" type="rating"/>
+				<field label="Service" content="servicerating" type="rating"/>
+				<field label="Value" content="valuerating" type="rating"/>
+			</group>
+		</td><td width="50%" valign="top">
+			<field label="Image" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Review" content="/review/description" type="textarea"/>
+			<field label="Tags" content="/review/tags" type="tags"/>
+		</td></tr>
+	</table>
+	</group>
+
+</editor>
+</micro-content>

@@ -1,0 +1,102 @@
+#!/usr/bin/env python
+
+import os, re, sys, time
+
+def cmd(s):
+    print s
+    return os.system(s)
+
+# version history:
+# 1.0pre7 - version for SB website on Monday morning, 12 Dec 2005
+# 1.0pre8 - version for SB website on Tuesday morning, 13 Dec 2005
+
+VERSION = "1.0pre8"
+
+def make_archives(path):
+    cmd("cd dist_tmp; tar -czf output/%s.tar.gz %s" % (path, path))
+    cmd("cd dist_tmp; zip -r output/%s.zip %s" % (path, path))
+
+def make_dist_dir(dist):
+    path = 'structuredblogging-%s-%s' % (dist, VERSION)
+    cmd("mkdir dist_tmp/%s" % path)
+    return path
+
+# pull code from subversion
+def get_code():
+    SVN_URL = re.search(r'url="(.*?)"', open(".svn/entries").read()).group(1)
+    cmd("mkdir dist_tmp/source")
+    # figure out what to get from svn
+    svn_folders = ('src', 'website')
+    svn_urls = ' '.join(["%s/%s" % (SVN_URL, folder) for folder in svn_folders])
+    # check it out
+    cmd("cd dist_tmp/source; svn checkout %s ." % svn_urls)
+    # get rid of .svn directories
+    cmd("cd dist_tmp/source; find . -name .svn | xargs rm -rf")
+    # get rid of dev stuff and the wp-admin stylesheet
+    cmd("rm -rf dist_tmp/source/src/wp/wpsb-files/microcontent/descriptions/notes dist_tmp/source/src/wp/wp-admin/wp-admin.css")
+    # put in version numbers
+    for fn in ("src/wp/wp-content/plugins/structuredblogging.php",
+               "src/wp/SB-README.txt",
+               "src/mt/plugins/StructuredBlogging/StructuredBlogging.pl",
+               "src/mt/SB-README.txt",
+               ):
+        fn = "dist_tmp/source/%s" % fn
+        txt = open(fn).read().replace("##VERSION##", VERSION).replace("##DATE##", time.strftime("%d %B %Y"))
+        open(fn, 'wt').write(txt)
+
+# make Wordpress plugin distribution
+def make_wp():
+    print "Building Wordpress plugin"
+    wp_dir = make_dist_dir('wp')
+    cmd("cp -r dist_tmp/source/src/wp/* dist_tmp/%s/" % wp_dir)
+    make_archives(wp_dir)
+
+# make Movable Type plugin distribution
+def make_mt():
+    print "Building Movable Type plugin"
+    mt_dir = make_dist_dir("mt")
+    cmd("cp -r dist_tmp/source/src/mt/* dist_tmp/%s/" % mt_dir)
+    cmd("cp -r dist_tmp/source/src/wp/wpsb-files/microcontent/descriptions/* dist_tmp/%s/plugins/StructuredBlogging/descriptions/" % mt_dir)
+    cmd("mkdir -p dist_tmp/%s/plugins/StructuredBlogging/js" % mt_dir)
+    cmd("cp -r dist_tmp/source/src/wp/wpsb-files/*.js dist_tmp/%s/plugins/StructuredBlogging/js/" % mt_dir)
+    cmd("cp -r dist_tmp/source/src/microcontent/MicroContent.pm dist_tmp/%s/plugins/StructuredBlogging/lib/" % mt_dir)
+    cmd("find dist_tmp/%s -type f -name '*.cgi' | xargs chmod +x" % mt_dir)
+    make_archives(mt_dir)
+
+# make website
+def make_web():
+    print "Building website"
+    cmd("cp -r dist_tmp/source/website dist_tmp/sb_website")
+    cmd("cp -r dist_tmp/output/* dist_tmp/sb_website/files/")
+    open("dist_tmp/sb_website/files/version.txt", "wt").write(VERSION)
+    
+def main(args):
+    do_push = 0
+    for arg in args[1:]:
+        if arg == 'push':
+            do_push = 1
+        else:
+            print "Syntax: %s [push]" % args[0]
+            return
+    
+    print "Making Structured Blogging distribution"
+
+    cmd("rm -rf dist_tmp")
+    cmd("mkdir -p dist_tmp/output archive_dist")
+
+    get_code()
+
+    make_wp()
+    make_mt()
+    make_web()
+
+    # take a copy for the future
+    cmd("cp -vr dist_tmp/output/* archive_dist/")
+
+    if do_push:
+        # push it up to the server
+        cmd("rsync -vr --delete dist_tmp/sb_website phil@pokemon.broadbandmechanics.com:public_html/")
+
+if __name__ == '__main__':
+    main(sys.argv)
+    

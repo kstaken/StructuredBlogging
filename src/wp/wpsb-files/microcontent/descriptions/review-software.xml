@@ -1,0 +1,62 @@
+<micro-content type="review/software" label="Software" version="1.0">
+<display media="html">
+	<group content="/review"><div>
+		<group content="subject"><div class="hreview">
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><p><field content="@image" type="image"/></p></if>
+			<if content="@year"><p><b>Year</b>: <field content="@year"/></p></if>
+			<if content="@author"><p><b>Author</b>: <field content="@author"/></p></if>
+			<if content="@category"><p><b>Category</b>: <field-map content="@category">
+				<map input="game" output="Game"/>
+				<map input="utility" output="Utility"/>
+				<map input="publishing" output="Publishing"/>
+				<map input="office" output="Office Software"/>
+				<map input="os" output="Operating System"/>
+			</field-map></p></if>
+			<if content="@publisher"><p><b>Publisher</b>: <field content="@publisher"/></p></if>
+			<if content="@price"><p><b>Price</b>: <field content="@price"/></p></if>
+		</div></group>
+		<p><field content="rating" type="rating"/></p>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review/subject">
+		<table class="sb_boxtable" width="100%"><tr><td width="50%" valign="top">
+			<field label="Name" content="@name" id="lookup-software"/>
+			<group orientation="horizontal">
+				<field label="Author" content="@author" length="48" id="lookup-manufacturer"/>
+				<field label="Year" content="@year" type="int" length="4" id="lookup-year"/>
+			</group>
+			<group orientation="horizontal">
+				<field label="Platform" content="@platform" type="select">
+					<option value="windows">Windows</option>
+					<option value="macos">Mac OS</option>
+					<option value="linux">Linux</option>
+					<option value="dos">DOS</option>
+					<option value="other">Other</option>
+				</field>
+				<field label="Category" content="@category" type="select">
+					<option value="game">Game</option>
+					<option value="utility">Utility</option>
+					<option value="publishing">Publishing</option>
+					<option value="office">Office Software</option>
+					<option value="os">Operating System</option>
+				</field>
+				<field label="Price" content="@price" length="17"/>
+			</group>
+			<field label="Publisher" content="@publisher"/>
+			<field label="Link" content="@url" type="url" id="lookup-link"/>
+			<field label="Rating" content="/review/rating" type="rating"/>
+		</td><td width="50%" valign="top">
+			<field label="Image" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td colspan="2">
+			<field label="Description" content="/review/description" type="textarea"/>
+		</td></tr>
+		</table>
+	</group>
+
+</editor>
+</micro-content>

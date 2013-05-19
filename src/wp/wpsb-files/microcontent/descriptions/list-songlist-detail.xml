@@ -1,0 +1,71 @@
+<micro-content display="false" type="list/songlist-detail" label="Song List Detail (Kimbro)" version="1.0" >
+    <display media="html">           
+        <style type="text/css">
+            .sb-songlist
+            {
+                font-size: small;
+            }            
+        </style>
+        <div>             
+            <h3><field content="/songlist/title"/></h3>
+            <if content="/songlist/description">
+                Description: <field content="/songlist/description"/>            
+            </if>
+        </div>
+        <p/>
+        <div>
+            <table class="sb-songlist">
+                <th>Title</th><th>Artist</th><th>Album</th><th>Song Length</th>
+                <group repeat="unlimited" content="/songlist/song">
+                    <tr>
+                        <td>
+                            <field content="title"/>
+                        </td>
+                        <td>
+                            <field content="artist"/>
+                        </td>
+                        <td>
+                            <field content="album"/>
+                        </td>
+                        <td>
+                            <field content="length" type="time"/>            
+                        </td>
+                    </tr>
+                </group>        
+            </table>            
+        </div>
+    </display>
+    
+    <editor mode="custom">
+        <div style="clear: left;">
+            <b>Playlist Title:</b> <field content="/songlist/title" length="40"/><br />
+            <b>Playlist Description:</b> <field content="/songlist/description" length="40"/><br/>
+        
+            <table>
+                <tr><th>Title</th><th>Artist</th><th>Album</th><th>Song length</th></tr>
+            
+                <group repeat="unlimited" content="/songlist/song" orientation="horizontal">
+                    <tr>
+                        <td><field content="title" length="30"/></td>
+                        <td><field content="artist" length="30"/></td>
+                        <td><field content="album" length="30"/></td>
+                        <td><field content="length" type="time" length="5"/></td>
+                        <td><field label="Delete row" content="" type="deleteRow"/></td>
+                    </tr>
+                </group>        
+            </table>
+            <field label="Add row" content="/songlist/song" type="addRow"/>
+        </div>
+    </editor>
+</micro-content>
+        
+            
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+<micro-content type="list/list" label="List" version="1.0">
+<display media="html">
+	<group content="/list">
+		<ul>
+			<group repeat="unlimited" content="item"><if content=""><li><field content=""/></li></if></group>
+		</ul>
+	</group>
+</display>
+<editor>
+	<group content="/list">
+		<table class="sb_boxtable" width="100%">
+		<tr><td>
+			<group repeat="unlimited" content="item" addlabel="Add another item">
+				<field label="Item" content="" length="100"/>
+			</group>
+		</td></tr></table>
+	</group>
+
+</editor>
+</micro-content>

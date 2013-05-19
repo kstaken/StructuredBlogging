@@ -1,0 +1,40 @@
+.sb-review-image
+{
+	float: left;
+	margin: 0px 10px 10px 0px;
+}
+
+.sb-review-field-title
+{
+    font-weight: bold;
+}
+
+/* 
+	for displaying "stars" in reviews (e.g. 4/5 stars), these
+	styles use images.  if you take out the styles, the row 
+	should disappear.
+*/
+.sb-fullstar
+{
+	background: url( "full-star.gif" ) no-repeat;
+	display: inline;
+	width: 20px;
+	height: 20px;
+	float: left;
+}
+
+/* this is the empty star, basically a placeholder */
+.sb-emptystar
+{
+	background: url( "empty-star.gif" ) no-repeat;
+	display: inline;
+	width: 20px;
+	height: 20px;
+	float: left;
+}
+
+/* end the row of stars (if displayed) */
+.sb-endstars
+{
+	clear: left;
+}

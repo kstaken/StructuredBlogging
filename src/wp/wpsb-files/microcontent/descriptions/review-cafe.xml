@@ -1,0 +1,76 @@
+<micro-content type="review/cafe" label="Cafe" version="1.0">
+<display media="html">
+	<group content="/review"><div class="hreview">
+		<group content="subject">
+			<if content="@name"><h3 class="item fn"><if content="@url"><a class="url"><attribute name="href"><field content="@url"/></attribute><field content="@name"/></a></if><if op="not" content="@url"><field content="@name"/></if></h3></if>
+			<if content="@image"><field type="image" content="@image"/></if>
+			<if content="@style"><p><b>Style/ethnicity:</b> <field content="@style"/></p></if>
+			<if content="@map"><p><a><attribute name="href"><field content="@map"/></attribute>Map</a></p></if>
+			<if content="@chain"><p><b>Chain</b>: <field content="@chain"/></p></if>
+			<if content="hours/@opening"><group content="hours">
+			<p>Hours: <if content="@opening"><field content="@opening"/></if> - <if content="@closing"><field content="@closing"/></if></p>
+			</group></if>
+			<group content="price"><if content="@min">
+			<p>Price: <field content="@min"/> - <field content="@max"/>
+				<if content="@currency">(<field content="@currency"/>)</if></p>
+			</if></group>
+			<p><group content="location">
+				<b>Location</b>:
+				<if content="@address"><p><field content="@address"/></p></if>
+				<if content="@subaddress"><p><field content="@subaddress"/></p></if>
+				<p><if content="@city"><field content="@city"/><if content="@state">, </if></if>
+				<if content="@state"><field content="@state"/></if>
+				<if content="@postcode"><field content="@postcode"/></if></p>
+				<if content="@country"><p><field content="@country"/></p></if>
+			</group></p>
+		</group>
+		<if content="foodrating"><p><b>Food rating</b>: <field content="foodrating" type="rating"/></p></if>
+		<if content="decorrating"><p><b>Decor rating</b>: <field content="decorrating" type="rating"/></p></if>
+		<if content="servicerating"><p><b>Service rating</b>: <field content="servicerating" type="rating"/></p></if>
+		<if content="description"><div class="description"><field content="description"/></div></if>
+	</div></group>
+
+</display>
+<editor>
+	<group content="/review">
+		<table class="sb_boxtable" width="100%">
+		<group content="subject">
+		<tr><td valign="top" width="50%">
+			<field label="Caf&amp;eacute; name" content="@name"/>
+			<field label="Style/ethnicity" content="@style"/>
+			<group label="Location" content="location" orientation="horizontal">
+				<field label="Address 1" content="@address"/>
+				<field label="Address 2" content="@subaddress" length="26"/>
+				<field label="City" content="@city" length="26"/>
+				<field label="State" content="@state" length="5"/>
+				<field label="Postcode" content="@postcode" length="9"/>
+				<field label="Country" content="@country" length="20"/>
+			</group>
+			<field label="Official URL" content="@url" type="url"/>
+			<field label="Map Link" content="@map" type="url"/>
+		</td><td valign="top" width="50%">
+			<field label="Photo" content="@image" type="uploadfile" filetype="image"/>
+		</td></tr>
+		<tr><td colspan="2">
+
+			<field label="Chain" content="@chain"/>
+			<group label="Hours" content="hours" orientation="horizontal">
+				<field label="Opening time" content="@opening" type="time" length="10"/>
+				<field label="Closing time" content="@closing" type="time" length="10"/>
+			</group>
+		</td></tr>
+		</group>
+		<tr><td colspan="2">
+		<group orientation="horizontal">
+		 <field label="Coffee rating" content="coffeerating" type="rating"/>
+		 <field label="Food rating" content="foodrating" type="rating"/>
+		 <field label="Decor rating" content="decorrating" type="rating"/>
+		 <field label="Service rating" content="servicerating" type="rating"/>
+		</group>
+		<field label="Review" content="description" type="textarea"/>
+		</td></tr>
+		</table>
+	</group>
+
+</editor>
+</micro-content>
